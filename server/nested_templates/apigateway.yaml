@@ -5,6 +5,8 @@ Description: >
 Parameters:
   StageName:
     Type: String
+  ApiName:
+    Type: String
   HelloWorldFunctionArn:
     Type: String
 
@@ -21,9 +23,9 @@ Resources:
       DefinitionBody:
         openapi: 3.0.1
         info:
-          title: !Join ["", ["serverless-saas-admin-api-", !Ref "AWS::Region"]]
+          title: !Join ["", [!Ref ApiName, "-", !Ref "AWS::Region"]]
         basePath: !Join ["", ["/", !Ref StageName]]
-        x-amazon-apigateway-api-key-source : "AUTHORIZER"
+        x-amazon-apigateway-api-key-source: "AUTHORIZER"
         schemes:
           - https
         paths:

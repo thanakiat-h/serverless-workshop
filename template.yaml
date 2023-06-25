@@ -4,10 +4,12 @@ Description: >
   test
   Sample SAM Template for test
 Parameters:
-    StageName:
-      Type: String
-      Default: "prod"
-
+  StageName:
+    Type: String
+    Default: "prod"
+  ApiName:
+    Type: String
+    Default: "api-server"
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Resources:
   LambdaFunctions:
@@ -22,5 +24,6 @@ Resources:
       Location: server/nested_templates/apigateway.yaml
       Parameters:
         StageName: !Ref StageName
+        ApiName: !Ref ApiName
         HelloWorldFunctionArn: !GetAtt LambdaFunctions.Outputs.HelloWorldFunctionArn
 

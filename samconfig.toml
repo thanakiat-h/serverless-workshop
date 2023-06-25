@@ -10,6 +10,6 @@ region = "ap-southeast-1"
 [default.global.parameters]
 stack_name = "thanakiat"
 
-#parameter_overrides = [
-#    "test",
-#]
+parameter_overrides = [
+    "ApiName=thanakiat-api",
+]
