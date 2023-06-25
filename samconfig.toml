@@ -1,0 +1,15 @@
+# More information about the configuration file can be found here:
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+version = 0.1
+
+[default]
+[default.deploy.parameters]
+capabilities = "CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND"
+region = "ap-southeast-1"
+
+[default.global.parameters]
+stack_name = "thanakiat"
+
+#parameter_overrides = [
+#    "test",
+#]

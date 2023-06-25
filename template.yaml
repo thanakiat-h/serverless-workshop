@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  test
+  Sample SAM Template for test
+Parameters:
+    StageName:
+      Type: String
+      Default: "prod"
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Resources:
+  LambdaFunctions:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: server/nested_templates/lambdafunctions.yaml
+
+  ApiGateway:
+    Type: AWS::Serverless::Application
+    DependsOn: LambdaFunctions
+    Properties:
+      Location: server/nested_templates/apigateway.yaml
+      Parameters:
+        StageName: !Ref StageName
+        HelloWorldFunctionArn: !GetAtt LambdaFunctions.Outputs.HelloWorldFunctionArn
+

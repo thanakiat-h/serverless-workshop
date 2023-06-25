@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Template to setup api gateway, apis, api keys and usage plan as part of bootstrap
+Parameters:
+  StageName:
+    Type: String
+  HelloWorldFunctionArn:
+    Type: String
+
+Resources:
+  AdminApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      MethodSettings:
+        - DataTraceEnabled: False
+          LoggingLevel: INFO
+          MetricsEnabled: True
+          ResourcePath: "/*"
+          HttpMethod: "*"
+      DefinitionBody:
+        openapi: 3.0.1
+        info:
+          title: !Join ["", ["serverless-saas-admin-api-", !Ref "AWS::Region"]]
+        basePath: !Join ["", ["/", !Ref StageName]]
+        x-amazon-apigateway-api-key-source : "AUTHORIZER"
+        schemes:
+          - https
+        paths:
+          /helloworld:
+            get:
+              security:
+                - api_key: []
+                - Authorizer: []
+              summary: Activate an existing tenant
+              description: Activate an existing tenant
+              produces:
+                - application/json
+              responses: {}
+              x-amazon-apigateway-integration:
+                uri: !Join
+                  - ""
+                  - - !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/
+                    - !Ref HelloWorldFunctionArn
+                    - /invocations
+                httpMethod: POST
+                type: aws_proxy
+      StageName: prod
