@@ -9,6 +9,22 @@ Globals:
     Timeout: 3
 
 Resources:
+  MyLambdaRole: 
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole # for execute function
+        - arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy   # for show log in cloudwatch 
+
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -17,6 +33,7 @@ Resources:
       Runtime: python3.9
       Architectures:
         - x86_64
+      Role: !GetAtt MyLambdaRole.Arn
 
 Outputs:
   HelloWorldFunctionArn: 

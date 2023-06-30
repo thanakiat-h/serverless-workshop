@@ -27,3 +27,12 @@ Resources:
         ApiName: !Ref ApiName
         HelloWorldFunctionArn: !GetAtt LambdaFunctions.Outputs.HelloWorldFunctionArn
 
+  APIGatewayLambdaPermissions:
+    Type: AWS::Serverless::Application
+    DependsOn:
+      - ApiGateway 
+    Properties:
+      Location: server/nested_templates/api_gateway_permissions.yaml
+      Parameters:
+        ServerlessApiGatewayApi: !GetAtt ApiGateway.Outputs.ServerlessApiGatewayApi
+        HelloWorldFunctionArn: !GetAtt LambdaFunctions.Outputs.HelloWorldFunctionArn

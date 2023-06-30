@@ -11,7 +11,7 @@ Parameters:
     Type: String
 
 Resources:
-  AdminApiGatewayApi:
+  ServerlessApiGatewayApi:
     Type: AWS::Serverless::Api
     Properties:
       MethodSettings:
@@ -31,9 +31,6 @@ Resources:
         paths:
           /helloworld:
             get:
-              security:
-                - api_key: []
-                - Authorizer: []
               summary: Activate an existing tenant
               description: Activate an existing tenant
               produces:
@@ -48,3 +45,8 @@ Resources:
                 httpMethod: POST
                 type: aws_proxy
       StageName: prod
+
+
+Outputs:
+  ServerlessApiGatewayApi: 
+    Value: !Ref ServerlessApiGatewayApi
