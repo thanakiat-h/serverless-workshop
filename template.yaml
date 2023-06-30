@@ -15,13 +15,13 @@ Resources:
   LambdaFunctions:
     Type: AWS::Serverless::Application
     Properties:
-      Location: server/nested_templates/lambdafunctions.yaml
+      # Location: server/nested_templates/lambdafunctions.yaml
 
   ApiGateway:
     Type: AWS::Serverless::Application
     DependsOn: LambdaFunctions
     Properties:
-      Location: server/nested_templates/apigateway.yaml
+      # Location: server/nested_templates/apigateway.yaml
       Parameters:
         StageName: !Ref StageName
         ApiName: !Ref ApiName
@@ -32,7 +32,7 @@ Resources:
     DependsOn:
       - ApiGateway 
     Properties:
-      Location: server/nested_templates/api_gateway_permissions.yaml
+      # Location: server/nested_templates/api_gateway_permissions.yaml
       Parameters:
         ServerlessApiGatewayApi: !GetAtt ApiGateway.Outputs.ServerlessApiGatewayApi
         HelloWorldFunctionArn: !GetAtt LambdaFunctions.Outputs.HelloWorldFunctionArn

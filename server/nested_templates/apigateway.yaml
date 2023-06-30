@@ -29,7 +29,7 @@ Resources:
         schemes:
           - https
         paths:
-          /helloworld:
+          # /helloworld:
             get:
               summary: Activate an existing tenant
               description: Activate an existing tenant
